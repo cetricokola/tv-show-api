@@ -1,0 +1,29 @@
+{
+  "name": "teaching-schedules",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "cetric",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.4.1",
+    "date-and-time": "^0.11.1",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.6",
+    "jquery": "^3.4.1",
+    "mysql": "^2.17.1",
+    "password-hash": "^1.2.2",
+    "req-flash": "0.0.3",
+    "shortid": "^2.2.15"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.4",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-execute": "^0.2.2"
+  }
+}
