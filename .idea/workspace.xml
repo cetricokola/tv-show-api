@@ -2,29 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="399ec703-9a94-46db-96fc-fa2a8fb11b8e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/router/admin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/router/tv_show.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/router/users.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/css/style.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/css/style.sass" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/events.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/schedule.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/subject.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/teachers.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/includes/nav.ejs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/landing.ejs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/schedule.ejs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/subject.ejs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/view_schedule.ejs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/tv_show.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/tv_show.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +71,9 @@
       <workItem from="1577177006576" duration="6328000" />
       <workItem from="1577185649056" duration="26521000" />
       <workItem from="1577702100362" duration="1472000" />
-      <workItem from="1578728817714" duration="19792000" />
+      <workItem from="1578728817714" duration="20674000" />
+      <workItem from="1578903112943" duration="608000" />
+      <workItem from="1578984009911" duration="10375000" />
     </task>
     <task id="LOCAL-00001" summary="events">
       <created>1577368220475</created>
@@ -120,6 +102,10 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="421" y="40" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1577368219948" />
+    <state width="500" height="445" key="SwitcherDM" timestamp="1578995497827">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="500" height="445" key="SwitcherDM/0.0.1680.1050@0.0.1680.1050" timestamp="1578995497827" />
     <state x="622" y="444" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1577368244775">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -135,8 +121,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/router/tv_show.js</url>
-          <line>107</line>
-          <properties lambdaOrdinal="-1" />
+          <line>104</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>

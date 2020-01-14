@@ -7,7 +7,6 @@ module.exports = {
                 this.time = time;
                 this.description = description
             }
-
             getShowName() {
                 return this.show_name;
             }
@@ -26,12 +25,11 @@ module.exports = {
         }
 
         let show = new Show(req.body.show_name, req.body.description, req.body.genre_id, req.body.time);
-        const shortid = require('shortid');
         const date = require('date-and-time');
         const now = new Date();
         let created_time = date.format(now, 'YYYY-MM-DD HH:mm:ss');
-        let query = "INSERT INTO `shows`(id, name, description, genre_id, time, created_at) VALUES(?, ?,?,?,?,?)";
-        let values = [shortid.generate(), show.getShowName(), show.description, show.getGenreId(), show.getTime(), created_time];
+        let query = "INSERT INTO `shows`(name, description, genre_id, time, created_at) VALUES(?,?,?,?,?)";
+        let values = [show.getShowName(), show.getDescription(), show.getGenreId(), show.getTime(), created_time];
         db.query(query, values, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -62,20 +60,21 @@ module.exports = {
             }
         }
 
-        const shortid = require('shortid');
         let showActor = new ShowActor(req.body.show_id, req.body.actor_id);
-        const date = require('date-and-time');
+
         for (let i = 0; i < showActor.getActorId().length; i++) {
-            const now = new Date();
-            let created_time = date.format(now, 'YYYY-MM-DD HH:mm:ss');
-            let query = "INSERT INTO `show_actors`(id, show_id, actor_id, created_at) VALUES(?, ?,?,?)";
-            let values = [shortid.generate(), showActor.getShowId(), showActor.getActorId()[i], created_time];
+            let created_time = require('date-and-time').format(new Date(), 'YYYY-MM-DD HH:mm:ss');
+            let query = "INSERT INTO `show_actors` (show_id, actor_id, created_at) VALUES(?,?,?)";
+            let values = [showActor.getShowId(), showActor.getActorId()[i], created_time];
+
             db.query(query, values, (err, result) => {
                 if (err) {
+                    console.log("Error:", err);
                     return res.status(500).send(err);
                 }
             });
         }
+        console.log("Success:");
         return res.json("Actor(s) created successfully");
     },
     createGenre: (req, res) => {
@@ -83,19 +82,17 @@ module.exports = {
             constructor(name) {
                 this.name = name;
             }
-
             getName() {
                 return this.name;
             }
         }
 
         let genre = new Genre(req.body.name);
-        const shortid = require('shortid');
         const date = require('date-and-time');
         const now = new Date();
         let created_time = date.format(now, 'YYYY-MM-DD HH:mm:ss');
-        let query = "INSERT INTO `genres`(id, name, created_at) VALUES(?, ?,?)";
-        let values = [shortid.generate(), genre.getName(), created_time];
+        let query = "INSERT INTO `genres`(name, created_at) VALUES(?,?)";
+        let values = [genre.getName(), created_time];
         db.query(query, values, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -117,12 +114,11 @@ module.exports = {
         }
 
         let actor = new Actor(req.body.name);
-        const shortid = require('shortid');
         const date = require('date-and-time');
         const now = new Date();
         let created_time = date.format(now, 'YYYY-MM-DD HH:mm:ss');
-        let query = "INSERT INTO `actors`(id, name, created_at) VALUES(?, ?,?)";
-        let values = [shortid.generate(), actor.getName(), created_time];
+        let query = "INSERT INTO `actors`(name, created_at) VALUES(?,?)";
+        let values = [actor.getName(), created_time];
         db.query(query, values, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -153,12 +149,11 @@ module.exports = {
         }
 
         let comment = new Comment(req.body.show_id, req.body.user_id, req.body.comment);
-        const shortid = require('shortid');
         const date = require('date-and-time');
         const now = new Date();
         let created_time = date.format(now, 'YYYY-MM-DD HH:mm:ss');
-        let query = "INSERT INTO `comment_shows`(id, show_id, user_id, comment, created_at) VALUES(?, ?,?,?,?)";
-        let values = [shortid.generate(), comment.getShowId(), comment.getUserId(), comment.getComment(), created_time];
+        let query = "INSERT INTO `comment_shows`(show_id, user_id, comment, created_at) VALUES(?,?,?,?)";
+        let values = [comment.getShowId(), comment.getUserId(), comment.getComment(), created_time];
         db.query(query, values, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -280,7 +275,7 @@ module.exports = {
         });
     },
     viewShows: (req, res) => {
-        let query = "SELECT shows.id as show_id, shows.name as show_name, shows.description as show_description, shows.time as show_time, genres.name as genre FROM shows JOIN genres ON shows.genre_id = genres.id";
+        let query = "SELECT shows.id as show_id, shows.name as show_name, shows.description as show_description, shows.time as show_time, genres.name as genre ,actors.name as actors FROM shows,actors, genres where shows.genre_id = genres.id";
         db.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -300,7 +295,7 @@ module.exports = {
             }
         }
 
-        let userId = "0mHSujZM"; //value from the session
+        // let userId = "0mHSujZM"; //value from the session
         let comments = new Comments(req.params.show_id);
         let query = "SELECT comment_shows.id as comment_id, comment_shows.comment as comment, user_accounts.username as username FROM  comment_shows JOIN user_accounts on comment_shows.user_id = user_accounts.user_id WHERE show_id =?";
         db.query(query, comments.getShowId(), function (error, results) {
@@ -324,6 +319,26 @@ module.exports = {
         let ratings = new Ratings(req.params.show_id);
         let query = "SELECT ratings.id as rating_id, ratings.rating as rating, user_accounts.username as username FROM  ratings JOIN user_accounts on ratings.user_id = user_accounts.user_id WHERE show_id =?";
         db.query(query, ratings.getShowId(), function (error, results) {
+            if (error) {
+                throw error;
+            }
+            return res.json(results)
+        });
+    },
+    viewActors: (req, res) =>{
+        class Actor {
+            constructor(show_id) {
+                this.show_id = show_id;
+            }
+
+            getShowId() {
+                return this.show_id;
+            }
+        }
+
+        let actor = new Actor(req.params.show_id);
+        let query = "SELECT actors.name FROM  actors, shows, show_actors WHERE show_actors.actor_id = actors.id AND shows.id = show_actors.show_id";
+        db.query(query, actor.getShowId(), function (error, results) {
             if (error) {
                 throw error;
             }

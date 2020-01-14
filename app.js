@@ -7,7 +7,7 @@ const app = express();
 const port = 5000;
 const {createAccount, login} = require('./src/router/admin');
 const {register, signin} = require('./src/router/users');
-const {createShow,unsubscribeSubscription,viewRatings, viewComments, viewShows, viewSubscription, editShow, deleteShow, addActorsToShow, commentAShow, createActors, createGenre, rateAshow, subscribeToAShow } = require('./src/router/tv_show');
+const {createShow, viewActors,unsubscribeSubscription,viewRatings, viewComments, viewShows, viewSubscription, editShow, deleteShow, addActorsToShow, commentAShow, createActors, createGenre, rateAshow, subscribeToAShow } = require('./src/router/tv_show');
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -46,7 +46,8 @@ app.post('/create_a_genre', createGenre); //c
 app.post('/create_an_actor', createActors);  //c
 app.post('/subscribe_to_a_show', subscribeToAShow); //c
 
-app.get('/shows', viewShows);
+app.get('/shows', viewShows); //c//c
+app.get('/actors', viewActors);
 app.get('/comments/:show_id', viewComments);
 app.get('/rating/:show_id', viewRatings);
 app.get('/show_subscriptions', viewSubscription); //c
