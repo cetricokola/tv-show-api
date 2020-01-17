@@ -4,7 +4,17 @@
     <list default="true" id="399ec703-9a94-46db-96fc-fa2a8fb11b8e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/body-parser/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/body-parser/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mime-db/HISTORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/mime-db/HISTORY.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mime-db/db.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/mime-db/db.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mime-db/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/mime-db/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mime-types/HISTORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/mime-types/HISTORY.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mime-types/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/mime-types/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/tv_show.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/tv_show.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/users.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +83,9 @@
       <workItem from="1577702100362" duration="1472000" />
       <workItem from="1578728817714" duration="20674000" />
       <workItem from="1578903112943" duration="608000" />
-      <workItem from="1578984009911" duration="10375000" />
+      <workItem from="1578984009911" duration="12729000" />
+      <workItem from="1579156142642" duration="23800000" />
+      <workItem from="1579261593323" duration="1426000" />
     </task>
     <task id="LOCAL-00001" summary="events">
       <created>1577368220475</created>
@@ -110,18 +122,22 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="622" y="444" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1680.1050@0.0.1680.1050" timestamp="1577368244775" />
+    <state x="505" y="230" width="670" height="676" key="search.everywhere.popup" timestamp="1579165934524">
+      <screen x="0" y="23" width="1680" height="947" />
+    </state>
+    <state x="505" y="230" width="670" height="676" key="search.everywhere.popup/0.23.1680.947@0.23.1680.947" timestamp="1579165934524" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/app.js</url>
-          <line>19</line>
+          <line>20</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/router/tv_show.js</url>
-          <line>104</line>
+          <line>121</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
