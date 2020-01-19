@@ -13,8 +13,6 @@ module.exports = {
                 console.log(res.status(500).send(err));
                 return res.json({"status": false, "message": "Unable to create account try again."});
             } else {
-                let sess = req.session;
-                sess.username = req.body.username;
                 return res.json({"status": true, "message": "Account created successfully"});
             }
         });
@@ -29,10 +27,15 @@ module.exports = {
             let pass = result[0].password;
             let passwordHash = require('password-hash');
             if (passwordHash.verify(req.body.password, pass) === true) {
-                req.session.user = result[0].id;
-                return res.json({"status": true, "message": "Successful log in", "session": req.session.user});
+                let user = {
+                    id: result[0].id,
+                    name: result[0].name
+                }
+                req.session.user_id = result[0].id;
+                res.cookie('id', result[0].id, {maxAge: 900000, httpOnly: true});
+                res.cookie('user', user, {maxAge: 900000, httpOnly: true});
+                return res.json({"status": true, "message": "Successful log in", "session": res.cookies["user"]});
             } else {
-
                 return res.json({"status": false, "message": "Incorrect password"});
             }
         });

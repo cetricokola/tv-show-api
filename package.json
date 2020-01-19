@@ -11,20 +11,29 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "bootstrap": "^4.4.1",
+    "cookie-session": "^1.4.0",
+    "cors": "^2.8.5",
     "date-and-time": "^0.11.1",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.6",
+    "express-mysql-session": "^2.1.2",
     "express-session": "^1.17.0",
     "jquery": "^3.4.1",
+    "morgan": "^1.9.1",
     "mysql": "^2.17.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "password-hash": "^1.2.2",
     "req-flash": "0.0.3",
-    "shortid": "^2.2.15"
+    "shortid": "^2.2.15",
+    "lodash": "latest"
   },
   "devDependencies": {
+    "cookie-parser": "^1.4.4",
     "grunt": "^1.0.4",
     "grunt-contrib-watch": "^1.1.0",
-    "grunt-execute": "^0.2.2"
+    "grunt-execute": "^0.2.2",
+    "multer": "^1.4.2"
   }
 }

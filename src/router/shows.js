@@ -7,6 +7,7 @@ module.exports = {
                 this.time = time;
                 this.description = description
             }
+
             getShowName() {
                 return this.show_name;
             }
@@ -32,9 +33,10 @@ module.exports = {
         let values = [show.getShowName(), show.getDescription(), show.getGenreId(), show.getTime(), created_time];
         db.query(query, values, (err, result) => {
             if (err) {
-                return res.status(500).send(err);
+                console.log(res.status(500).send(err));
+                return res.json({"status": false})
             } else {
-                return res.json("Show created successfully");
+                return res.json({"status": true, "massage:": "Show created successfully"});
             }
         });
     },
@@ -44,19 +46,22 @@ module.exports = {
     deleteShow: (req, res) => {
         class Show {
             constructor(id) {
-                this.id =id;
+                this.id = id;
             }
+
             getShowId() {
                 return this.id;
             }
         }
+
         let show = new Show(req.params.id);
         let query = "DELETE FROM `shows` WHERE id =?";
         db.query(query, show.getShowId(), (err, result) => {
             if (err) {
-                return res.status(500).send(err);
+                console.log(res.status(500).send(err));
+                return res.json({"status": false})
             } else {
-                return res.json("Show deleted");
+                return res.json({"status": true});
             }
         });
 
@@ -77,28 +82,27 @@ module.exports = {
             }
         }
 
-        let showActor = new ShowActor(req.body.show_id, req.body.actor_id);
+        let showActor = new ShowActor(req.params.id, req.body.actor_id);
 
         for (let i = 0; i < showActor.getActorId().length; i++) {
             let created_time = require('date-and-time').format(new Date(), 'YYYY-MM-DD HH:mm:ss');
             let query = "INSERT INTO `show_actors` (show_id, actor_id, created_at) VALUES(?,?,?)";
             let values = [showActor.getShowId(), showActor.getActorId()[i], created_time];
-
             db.query(query, values, (err, result) => {
                 if (err) {
-                    console.log("Error:", err);
-                    return res.status(500).send(err);
+                    console.log(res.status(500).send(err));
+                    return res.json({"status": false})
                 }
             });
         }
-        console.log("Success:");
-        return res.json("Actor(s) created successfully");
+        return res.json({"status": false, "meassage": "Actor(s) created successfully"});
     },
     createGenre: (req, res) => {
         class Genre {
             constructor(name) {
                 this.name = name;
             }
+
             getName() {
                 return this.name;
             }
@@ -112,9 +116,10 @@ module.exports = {
         let values = [genre.getName(), created_time];
         db.query(query, values, (err, result) => {
             if (err) {
-                return res.status(500).send(err);
+                console.log(res.status(500).send(err));
+                return res.json({"status": false})
             } else {
-                return res.json("Genre created successfully");
+                return res.json({"status": true, "message": "Show created successfully"});
             }
         });
 
@@ -138,9 +143,10 @@ module.exports = {
         let values = [actor.getName(), created_time];
         db.query(query, values, (err, result) => {
             if (err) {
-                return res.status(500).send(err);
+                console.log(res.status(500).send(err));
+                return res.json({"status": false})
             } else {
-                return res.json("Actor created successfully");
+                return res.json({"status": true, "message": "Show created successfully"});
             }
         });
     },
@@ -169,9 +175,10 @@ module.exports = {
         let values = [comment.getShowId(), req.session.user, comment.getComment(), created_time];
         db.query(query, values, (err, result) => {
             if (err) {
-                return res.status(500).send(err);
+                console.log(res.status(500).send(err));
+                return res.json({"status": false})
             } else {
-                return res.json("Show commented");
+                return res.json({"status": true, "message": "Show commented"});
             }
         });
 
@@ -197,7 +204,7 @@ module.exports = {
             }
         }
 
-        let rating = new Rating(req.body.show_id, req.body.user_id, req.body.rate);
+        let rating = new Rating(req.params.id, req.session.user_id, req.body.rate);
         const shortid = require('shortid');
         const date = require('date-and-time');
         const now = new Date();
@@ -206,9 +213,10 @@ module.exports = {
         let values = [shortid.generate(), rating.getShowId(), rating.getUserId(), rating.getRating(), created_time];
         db.query(query, values, (err, result) => {
             if (err) {
-                return res.status(500).send(err);
+                console.log(res.status(500).send(err));
+                return res.json({"status": false})
             } else {
-                return res.json("You have rated this show");
+                return res.json({"status": true, "message": "You have rated this show"});
             }
         });
 
@@ -229,7 +237,7 @@ module.exports = {
             }
         }
 
-        let subscription = new Subscription(req.session.user, req.params.id);
+        let subscription = new Subscription(req.session.user_id, req.params.id);
         const date = require('date-and-time');
         const now = new Date();
         let created_time = date.format(now, 'YYYY-MM-DD HH:mm:ss');
@@ -237,7 +245,8 @@ module.exports = {
         let values = [subscription.getUserId(), subscription.getShowId(), created_time];
         db.query(query, values, (err, result) => {
             if (err) {
-                return res.status(500).send(err);
+                console.log(res.status(500).send(err));
+                return res.json({"status": false})
             } else {
                 return res.json("You have subscribed to this show");
             }
@@ -255,41 +264,43 @@ module.exports = {
             }
         }
 
-        let userId = "0mHSujZM"; //value from the session
-        let mysubscription = new subscription(userId);
+        let mysubscription = new subscription(req.session.user_id);
         let query = "SELECT subscriptions.id as subscriptions_id, subscriptions.show_id as show_id, shows.name as show_name FROM  subscriptions JOIN shows on subscriptions.show_id = shows.id WHERE user_id =?";
         db.query(query, mysubscription.getUserId(), function (error, results) {
             if (error) {
-                throw error;
+                console.log(res.status(500).send(error));
+                return res.json({"status": false})
             }
             return res.json(results)
         });
     },
     unsubscribeSubscription: (req, res) => {
         class subscription {
-            constructor(show_id) {
-                this.show_id = show_id;
+            constructor(id) {
+                this.id = id;
             }
 
-            getShowId() {
-                return this.show_id;
+            getUserId() {
+                return this.id;
             }
         }
 
-        let mysubscription = new subscription(req.params.show_id);
-        let query = "DELETE FROM subscriptions WHERE show_id =?";
-        db.query(query, mysubscription.getShowId(), function (error, results) {
+        let mysubscription = new subscription(req.session.user_id);
+        let query = "DELETE FROM subscriptions WHERE user_id =?";
+        db.query(query, mysubscription.getUserId(), function (error, results) {
             if (error) {
-                throw error;
+                console.log(res.status(500).send(err));
+                return res.json({"status": false})
             }
             return res.json("You have successfully unsubscribed from this tv show.");
         });
     },
     viewShows: (req, res) => {
-        let query = "SELECT shows.id, shows.name as show_name, shows.description as show_description, shows.time as show_time, genres.name as genre ,actors.name as actors FROM shows,actors, genres where shows.genre_id = genres.id";
+        let query = "SELECT shows.id, shows.name, shows.description, shows.time, genres.name as genre FROM shows,actors, genres where shows.genre_id = genres.id";
         db.query(query, (err, result) => {
             if (err) {
-                return res.status(500).send(err);
+                console.log(res.status(500).send(err));
+                return res.json({"status": false})
             } else {
                 return res.json(result);
             }
@@ -298,7 +309,7 @@ module.exports = {
     viewComments: (req, res) => {
         class Comments {
             constructor(show_id) {
-                this.show_id = show_id;
+                this.show_id = show_id
             }
 
             getShowId() {
@@ -306,12 +317,12 @@ module.exports = {
             }
         }
 
-        // let userId = "0mHSujZM"; //value from the session
         let comments = new Comments(req.params.show_id);
         let query = "SELECT comment_shows.id as comment_id, comment_shows.comment as comment, user_accounts.username as username FROM  comment_shows JOIN user_accounts on comment_shows.user_id = user_accounts.user_id WHERE show_id =?";
         db.query(query, comments.getShowId(), function (error, results) {
             if (error) {
-                throw error;
+                console.log(res.status(500).send(error));
+                return res.json({"status": false})
             }
             return res.json(results)
         });
@@ -331,12 +342,13 @@ module.exports = {
         let query = "SELECT ratings.id as rating_id, ratings.rating as rating, user_accounts.username as username FROM  ratings JOIN user_accounts on ratings.user_id = user_accounts.user_id WHERE show_id =?";
         db.query(query, ratings.getShowId(), function (error, results) {
             if (error) {
-                throw error;
+                console.log(res.status(500).send(error));
+                return res.json({"status": false})
             }
             return res.json(results)
         });
     },
-    viewActors: (req, res) =>{
+    viewActors: (req, res) => {
         class Actor {
             constructor(show_id) {
                 this.show_id = show_id;
@@ -346,20 +358,33 @@ module.exports = {
                 return this.show_id;
             }
         }
+
         let actor = new Actor(req.params.show_id);
         let query = "SELECT actors.name FROM  actors, shows, show_actors WHERE show_actors.actor_id = actors.id AND shows.id = show_actors.show_id";
         db.query(query, actor.getShowId(), function (error, results) {
             if (error) {
-                throw error;
+                console.log(res.status(500).send(error));
+                return res.json({"status": false})
             }
             return res.json(results)
         });
     },
-    viewGenres: (req, res)=>{
+    viewGenres: (req, res) => {
         let query = "SELECT * FROM  genres";
-        db.query(query,function (error, results) {
+        db.query(query, function (error, results) {
             if (error) {
-                throw error;
+                console.log(res.status(500).send(error));
+                return res.json({"status": false})
+            }
+            return res.json(results)
+        });
+    },
+    viewMySubscription: (req, res) =>{
+        let query = "SELECT subscriptions.id, subscriptions.show_id, shows.name FROM  subscriptions JOIN shows on subscriptions.show_id = shows.id WHERE user_id =?";
+        db.query(query, req.session.user_id, function (error, results) {
+            if (error) {
+                console.log(res.status(500).send(error));
+                return res.json({"status": false})
             }
             return res.json(results)
         });
