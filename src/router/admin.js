@@ -21,18 +21,18 @@ module.exports = {
     },
     login: (req, res) => {
         let query = "SELECT * FROM admins WHERE email = ?";
-        let email = req.body.email;
-        db.query(query, [email], (err, result) => {
+        db.query(query, [req.body.email], (err, result) => {
             if (err) {
                 console.log(res.status(500).send(err));
                 return res.json({"status": false, "message": "Unable to login try again."});
             }
+            console.log(req.body.email);
             let pass = result[0].password;
             let passwordHash = require('password-hash');
             if (passwordHash.verify(req.body.password, pass) === true) {
                 req.session.email = result[0].email;
-                res.cookie('email', result[0].email, {maxAge: 900000, httpOnly: true});
-                return res.json({"status": true, "message": "Successful log in", "session": res.cookies["email"]});
+                // res.cookie('id', req.session.email, {maxAge: 900000, httpOnly: true});
+                return res.json({"status": true, "message": "Successful log in", "session": req.session.email});
             } else {
                 return res.json({"status": false, "message": "Incorrect password"});
             }

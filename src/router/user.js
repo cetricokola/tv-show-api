@@ -29,12 +29,12 @@ module.exports = {
             if (passwordHash.verify(req.body.password, pass) === true) {
                 let user = {
                     id: result[0].id,
-                    name: result[0].name
+                    name: result[0].username
                 }
-                req.session.user_id = result[0].id;
-                res.cookie('id', result[0].id, {maxAge: 900000, httpOnly: true});
-                res.cookie('user', user, {maxAge: 900000, httpOnly: true});
-                return res.json({"status": true, "message": "Successful log in", "session": res.cookies["user"]});
+                req.session.user = user;
+                // res.cookie('id', result[0].id, {maxAge: 900000, httpOnly: true});
+                // res.cookie('user', user, {maxAge: 900000, httpOnly: true});
+                return res.json({"status": true, "message": "Successful log in", "session": req.session.user});
             } else {
                 return res.json({"status": false, "message": "Incorrect password"});
             }

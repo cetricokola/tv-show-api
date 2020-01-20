@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="399ec703-9a94-46db-96fc-fa2a8fb11b8e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/router/shows.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/router/user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/tv_show.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/users.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/shows.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/shows.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +81,10 @@
       <workItem from="1578984009911" duration="12729000" />
       <workItem from="1579156142642" duration="23800000" />
       <workItem from="1579261593323" duration="1902000" />
-      <workItem from="1579340589423" duration="30514000" />
+      <workItem from="1579340589423" duration="31412000" />
+      <workItem from="1579432463000" duration="3592000" />
+      <workItem from="1579497095089" duration="2802000" />
+      <workItem from="1579506304888" duration="12315000" />
     </task>
     <task id="LOCAL-00001" summary="events">
       <created>1577368220475</created>
@@ -126,6 +125,10 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="622" y="444" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1680.1050@0.0.1680.1050" timestamp="1577368244775" />
+    <state x="488" y="266" width="703" height="518" key="find.popup" timestamp="1579435895145">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="488" y="266" width="703" height="518" key="find.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1579435895145" />
     <state x="505" y="230" width="670" height="676" key="search.everywhere.popup" timestamp="1579165934524">
       <screen x="0" y="23" width="1680" height="947" />
     </state>
@@ -136,13 +139,31 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/app.js</url>
-          <line>22</line>
+          <line>20</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/router/tv_show.js</url>
           <line>126</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/router/shows.js</url>
+          <line>297</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/router/shows.js</url>
+          <line>53</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/router/shows.js</url>
+          <line>1</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

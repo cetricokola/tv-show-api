@@ -1,11 +1,13 @@
 module.exports = {
     createShow: (req, res) => {
         class Show {
-            constructor(show_name, description, genre_id, time) {
+            constructor(show_name, description, genre_id, time, actors, image) {
                 this.show_name = show_name;
                 this.genre_id = genre_id;
                 this.time = time;
-                this.description = description
+                this.description = description;
+                this.actors = actors;
+                this.image = image;
             }
 
             getShowName() {
@@ -23,14 +25,23 @@ module.exports = {
             getDescription() {
                 return this.description;
             }
+
+            getImage() {
+                return this.image;
+
+            }
+
+            getActors() {
+                return this.actors;
+            }
         }
 
-        let show = new Show(req.body.show_name, req.body.description, req.body.genre_id, req.body.time);
+        let show = new Show(req.body.show_name, req.body.description, req.body.genre_id, req.body.time, req.body.actors, req.body.image);
         const date = require('date-and-time');
         const now = new Date();
         let created_time = date.format(now, 'YYYY-MM-DD HH:mm:ss');
-        let query = "INSERT INTO `shows`(name, description, genre_id, time, created_at) VALUES(?,?,?,?,?)";
-        let values = [show.getShowName(), show.getDescription(), show.getGenreId(), show.getTime(), created_time];
+        let query = "INSERT INTO `shows`(name, description, genre_id, time, actors, image, created_at) VALUES(?,?,?,?,?,?,?)";
+        let values = [show.getShowName(), show.getDescription(), show.getGenreId(), show.getTime(), show.getActors(), show.getImage(), created_time];
         db.query(query, values, (err, result) => {
             if (err) {
                 console.log(res.status(500).send(err));
@@ -39,9 +50,6 @@ module.exports = {
                 return res.json({"status": true, "massage:": "Show created successfully"});
             }
         });
-    },
-    editShow: (req, res) => {
-
     },
     deleteShow: (req, res) => {
         class Show {
@@ -59,9 +67,9 @@ module.exports = {
         db.query(query, show.getShowId(), (err, result) => {
             if (err) {
                 console.log(res.status(500).send(err));
-                return res.json({"status": false})
+                return res.json("not deleted")
             } else {
-                return res.json({"status": true});
+                return res.json("deleted");
             }
         });
 
@@ -172,7 +180,7 @@ module.exports = {
         const now = new Date();
         let created_time = date.format(now, 'YYYY-MM-DD HH:mm:ss');
         let query = "INSERT INTO `comment_shows`(show_id, user_id, comment, created_at) VALUES(?,?,?,?)";
-        let values = [comment.getShowId(), req.session.user, comment.getComment(), created_time];
+        let values = [comment.getShowId(), req.session.user.id, comment.getComment(), created_time];
         db.query(query, values, (err, result) => {
             if (err) {
                 console.log(res.status(500).send(err));
@@ -181,7 +189,6 @@ module.exports = {
                 return res.json({"status": true, "message": "Show commented"});
             }
         });
-
     },
     rateAshow: (req, res) => {
         class Rating {
@@ -204,13 +211,12 @@ module.exports = {
             }
         }
 
-        let rating = new Rating(req.params.id, req.session.user_id, req.body.rate);
-        const shortid = require('shortid');
+        let rating = new Rating(req.params.id, req.session.user.id, req.body.rate);
         const date = require('date-and-time');
         const now = new Date();
         let created_time = date.format(now, 'YYYY-MM-DD HH:mm:ss');
-        let query = "INSERT INTO `ratings`(id, show_id, user_id, rating, created_at) VALUES(?, ?,?,?, ?)";
-        let values = [shortid.generate(), rating.getShowId(), rating.getUserId(), rating.getRating(), created_time];
+        let query = "INSERT INTO `ratings`(show_id, user_id, rating, created_at) VALUES(?,?,?, ?)";
+        let values = [rating.getShowId(), rating.getUserId(), rating.getRating(), created_time];
         db.query(query, values, (err, result) => {
             if (err) {
                 console.log(res.status(500).send(err));
@@ -237,7 +243,7 @@ module.exports = {
             }
         }
 
-        let subscription = new Subscription(req.session.user_id, req.params.id);
+        let subscription = new Subscription(req.session.user.id, req.params.id);
         const date = require('date-and-time');
         const now = new Date();
         let created_time = date.format(now, 'YYYY-MM-DD HH:mm:ss');
@@ -264,45 +270,44 @@ module.exports = {
             }
         }
 
-        let mysubscription = new subscription(req.session.user_id);
-        let query = "SELECT subscriptions.id as subscriptions_id, subscriptions.show_id as show_id, shows.name as show_name FROM  subscriptions JOIN shows on subscriptions.show_id = shows.id WHERE user_id =?";
-        db.query(query, mysubscription.getUserId(), function (error, results) {
+        let query = "SELECT subscriptions.id as subscriptions_id, subscriptions.show_id as show_id, shows.name as show_name, user_accounts.email as email FROM  subscriptions JOIN shows on subscriptions.show_id = shows.id JOIN user_accounts ON  user_accounts.id = subscriptions.user_id";
+        db.query(query, function (error, results) {
             if (error) {
                 console.log(res.status(500).send(error));
-                return res.json({"status": false})
+                return res.json("error")
             }
             return res.json(results)
         });
     },
     unsubscribeSubscription: (req, res) => {
-        class subscription {
-            constructor(id) {
-                this.id = id;
-            }
-
-            getUserId() {
-                return this.id;
-            }
-        }
-
-        let mysubscription = new subscription(req.session.user_id);
-        let query = "DELETE FROM subscriptions WHERE user_id =?";
-        db.query(query, mysubscription.getUserId(), function (error, results) {
+        let query = "DELETE FROM subscriptions WHERE id =? ";
+        db.query(query, req.params.id, function (error, results) {
             if (error) {
-                console.log(res.status(500).send(err));
-                return res.json({"status": false})
+                console.log(res.status(500).send(error));
+                return res.json("not")
             }
-            return res.json("You have successfully unsubscribed from this tv show.");
+            return res.json("deleted");
         });
     },
     viewShows: (req, res) => {
-        let query = "SELECT shows.id, shows.name, shows.description, shows.time, genres.name as genre FROM shows,actors, genres where shows.genre_id = genres.id";
+        let query = "SELECT shows.id, shows.name, shows.description, shows.actors, shows.image, shows.time, genres.name as genre FROM shows, genres where shows.genre_id = genres.id";
         db.query(query, (err, result) => {
             if (err) {
                 console.log(res.status(500).send(err));
                 return res.json({"status": false})
             } else {
                 return res.json(result);
+            }
+        });
+    },
+    selectShow: (req, res) => {
+        let query = "SELECT shows.id, shows.name, shows.description, shows.actors, shows.image, shows.time, genres.name as genre, genres.id as genre_id FROM shows, genres where shows.genre_id = genres.id and shows.id =?";
+        db.query(query, [req.params.id], (err, result) => {
+            if (err) {
+                console.log(res.status(500).send(err));
+                return res.json("no shows")
+            } else {
+                return res.json("shows");
             }
         });
     },
@@ -317,17 +322,19 @@ module.exports = {
             }
         }
 
-        let comments = new Comments(req.params.show_id);
-        let query = "SELECT comment_shows.id as comment_id, comment_shows.comment as comment, user_accounts.username as username FROM  comment_shows JOIN user_accounts on comment_shows.user_id = user_accounts.user_id WHERE show_id =?";
+        let comments = new Comments(req.params.id);
+        let query = "SELECT comment_shows.id as comment_id, comment_shows.comment as comment, user_accounts.username as username FROM  comment_shows JOIN user_accounts on comment_shows.user_id = user_accounts.id WHERE show_id =?";
         db.query(query, comments.getShowId(), function (error, results) {
             if (error) {
                 console.log(res.status(500).send(error));
-                return res.json({"status": false})
+                return res.json("no comment")
             }
             return res.json(results)
         });
     },
     viewRatings: (req, res) => {
+        let sum = 0;
+
         class Ratings {
             constructor(show_id) {
                 this.show_id = show_id;
@@ -338,14 +345,18 @@ module.exports = {
             }
         }
 
-        let ratings = new Ratings(req.params.show_id);
-        let query = "SELECT ratings.id as rating_id, ratings.rating as rating, user_accounts.username as username FROM  ratings JOIN user_accounts on ratings.user_id = user_accounts.user_id WHERE show_id =?";
+        let ratings = new Ratings(req.params.id);
+        let query = "SELECT ratings.rating FROM  ratings WHERE show_id =?";
         db.query(query, ratings.getShowId(), function (error, results) {
             if (error) {
                 console.log(res.status(500).send(error));
                 return res.json({"status": false})
             }
-            return res.json(results)
+            for (let i = 0; i < results.length; i++) {
+                let rate = parseInt(results[i].rating, 10);
+                sum = +rate
+            }
+            return res.json({"status": true, "rating": sum})
         });
     },
     viewActors: (req, res) => {
@@ -379,14 +390,26 @@ module.exports = {
             return res.json(results)
         });
     },
-    viewMySubscription: (req, res) =>{
+    viewMySubscription: (req, res) => {
         let query = "SELECT subscriptions.id, subscriptions.show_id, shows.name FROM  subscriptions JOIN shows on subscriptions.show_id = shows.id WHERE user_id =?";
-        db.query(query, req.session.user_id, function (error, results) {
+        db.query(query, req.session.user.id, function (error, results) {
             if (error) {
                 console.log(res.status(500).send(error));
-                return res.json({"status": false})
+                return res.json("no subscription")
             }
             return res.json(results)
         });
+    },
+    updateShow: (req, res) => {
+        let query = "UPDATE shows SET name=? , description =?, genre_id = ?, time=?, actors=?, image=? WHERE id = ? ";
+        db.query(query, [req.body.name, req.body.description, req.body.time, req.body.genre_id, req.body.time, req.body.actors, req.body.image, req.params.id], function (error, results) {
+            if (error) {
+                console.log(res.status(500).send(error));
+                return res.json("no update")
+            }
+            console.log(req.body.description)
+            return res.json("updated")
+        });
+
     }
 }
